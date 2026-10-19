@@ -5,7 +5,7 @@
       "number": 1,
       "title": "M1 소스·연구·검증 보존",
       "url": "https://github.com/castle923/model-simulator/milestone/1",
-      "state": "open"
+      "state": "closed"
     },
     {
       "number": 2,
@@ -41,7 +41,7 @@
       "number": 7,
       "title": "M7 CI·회귀·릴리스 재현",
       "url": "https://github.com/castle923/model-simulator/milestone/7",
-      "state": "open"
+      "state": "closed"
     },
     {
       "number": 8,
@@ -56,7 +56,7 @@
       "title": "보존 스냅샷·연구 자료·SHA-256·저장소 읽기 검증",
       "milestone": 1,
       "url": "https://github.com/castle923/model-simulator/issues/1",
-      "state": "open"
+      "state": "closed"
     },
     {
       "number": 2,
@@ -119,7 +119,7 @@
       "title": "GitHub Actions 회귀·타입·빌드 파이프라인 검증",
       "milestone": 7,
       "url": "https://github.com/castle923/model-simulator/issues/10",
-      "state": "open"
+      "state": "closed"
     },
     {
       "number": 11,
@@ -142,5 +142,6 @@
       "url": "https://github.com/castle923/model-simulator/issues/13",
       "state": "open"
     }
-  ]
+  ],
+  "snapshotDate": "2026-10-19"
 }

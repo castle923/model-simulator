@@ -1141,8 +1141,8 @@
     },
     {
       "path": "docs/MILESTONES.md",
-      "bytes": 3429,
-      "sha256": "7483e84690a16cb42c3ea1a9b4c58f4af6a44d834e2e32295e77c9fe9a6599a2",
+      "bytes": 3411,
+      "sha256": "14a808c9bb8748beefa5a988a036f015856d28daf864d88b637ce25de5537b37",
       "group": "github-organization"
     },
     {
@@ -1173,8 +1173,8 @@
     },
     {
       "path": "docs/STATUS.md",
-      "bytes": 1812,
-      "sha256": "0619b0ebca119072592ae317f332a638d941727d1674c9307bca31851d3aeaa8",
+      "bytes": 1902,
+      "sha256": "de4b3c7c91344ff144ef93f70803a7af86a5af59e99b0295e289c334c187cf34",
       "group": "github-organization"
     },
     {
@@ -2066,10 +2066,16 @@
       "source_sha256": "bc7d83425702955b4cb67cb14ede9d603f9d912376d57a2d81d661094d2a782a"
     },
     {
+      "path": "verification/ARCHIVE_REVIEW.md",
+      "group": "github-organization",
+      "bytes": 1120,
+      "sha256": "35c786cf869471784ae47cf085941aaf7b1ea02ab286ea93d0513cf6d4e7e8f4"
+    },
+    {
       "group": "github-organization",
       "path": "verification/GITHUB_PLAN.json",
-      "bytes": 4666,
-      "sha256": "74a1c69d89a5863756245d09f5e5d5aae598dca359a87ed1f1ee362d72280bdf"
+      "bytes": 4707,
+      "sha256": "fb0dfa77a6337f59ca5fda672b975e074c6134a2e96818dfcbe058095e5b17f9"
     },
     {
       "path": "verification/deployment-2026-10-16.json",
@@ -2077,6 +2083,18 @@
       "sha256": "4c755fd3c654e972a8df840276d6beced27fea3afc322f2a4862d252c8c679a2",
       "group": "historical-evidence",
       "source_sha256": "4c755fd3c654e972a8df840276d6beced27fea3afc322f2a4862d252c8c679a2"
+    },
+    {
+      "path": "verification/github-actions-2026-10-19.json",
+      "group": "github-organization",
+      "bytes": 4026,
+      "sha256": "cd1098d45a5b93a5a71c7971c6e2dae59591f56a5a54a596ff1a79a13b5c4d41"
+    },
+    {
+      "path": "verification/local-regression-2026-10-19.json",
+      "group": "github-organization",
+      "bytes": 8525,
+      "sha256": "da84eb6a0be6a42413a588eb75b859593d19d2a8dd2a155a40d5e7746a1783d0"
     },
     {
       "path": "verification/source-review-2026-10-16.json",

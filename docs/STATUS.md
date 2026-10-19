@@ -12,6 +12,6 @@
 | 외부 엔진·Pi5·ROS2·센서/팔 | 조사·준비/미연결 | 실장비와 호환성·설치·실행 검증 필요 |
 | 자동 순찰/PPE/30%충전 | 향후 개발 | 기본 YOLO COCO는 안전모 모델이 아님; 로컬 PPE weights와 ID교정 필요 |
 | 과거 검증 | 보존 | `verification/source-review-2026-10-16.json`, Astra보고서 |
-| 새 CI | Actions 결과 참조 | 과거 통과 기록과 새 실행 결과를 구분 |
+| 새 CI | GitHub Actions 성공 | [초기 보존 소스의 실제 실행](https://github.com/castle923/model-simulator/actions/runs/39267119260), 30검사+타입+빌드 통과 |
 
 `docs/REQUIREMENTS_STATUS.md`는 10/14 역사 문서입니다. 거기의1~4대/4~20m 수치는 최신 범위가 아닙니다. `docs/history/LEGACY_README.md`의 DB·Gazebo·배포·공유 주장은 이전 UI/시점에 대한 기록이며 새 GitHub 저장소의 설치·연결 검증 결과가 아닙니다.
