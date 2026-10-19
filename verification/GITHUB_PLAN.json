@@ -1,0 +1,146 @@
+{
+  "repo": "castle923/model-simulator",
+  "milestones": [
+    {
+      "number": 1,
+      "title": "M1 소스·연구·검증 보존",
+      "url": "https://github.com/castle923/model-simulator/milestone/1",
+      "state": "open"
+    },
+    {
+      "number": 2,
+      "title": "M2 공통 장면·Free Space",
+      "url": "https://github.com/castle923/model-simulator/milestone/2",
+      "state": "closed"
+    },
+    {
+      "number": 3,
+      "title": "M3 주행·통행권·공용 충전",
+      "url": "https://github.com/castle923/model-simulator/milestone/3",
+      "state": "open"
+    },
+    {
+      "number": 4,
+      "title": "M4 기체·장비·임무 커스텀",
+      "url": "https://github.com/castle923/model-simulator/milestone/4",
+      "state": "closed"
+    },
+    {
+      "number": 5,
+      "title": "M5 카메라·UI·오류 실험",
+      "url": "https://github.com/castle923/model-simulator/milestone/5",
+      "state": "open"
+    },
+    {
+      "number": 6,
+      "title": "M6 팀 협업·서버·엔진 연결",
+      "url": "https://github.com/castle923/model-simulator/milestone/6",
+      "state": "open"
+    },
+    {
+      "number": 7,
+      "title": "M7 CI·회귀·릴리스 재현",
+      "url": "https://github.com/castle923/model-simulator/milestone/7",
+      "state": "open"
+    },
+    {
+      "number": 8,
+      "title": "M8 ROS2·Pi5·PPE·실물 시연",
+      "url": "https://github.com/castle923/model-simulator/milestone/8",
+      "state": "open"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "title": "보존 스냅샷·연구 자료·SHA-256·저장소 읽기 검증",
+      "milestone": 1,
+      "url": "https://github.com/castle923/model-simulator/issues/1",
+      "state": "open"
+    },
+    {
+      "number": 2,
+      "title": "[웹 구현] 단일·다중 공통 Free Space 편집",
+      "milestone": 2,
+      "url": "https://github.com/castle923/model-simulator/issues/2",
+      "state": "closed"
+    },
+    {
+      "number": 3,
+      "title": "[웹 구현] 동적 우회·전진 경로·통로 예약·공용 충전",
+      "milestone": 3,
+      "url": "https://github.com/castle923/model-simulator/issues/3",
+      "state": "closed"
+    },
+    {
+      "number": 4,
+      "title": "혼잡한 8대 충전 배치의 안전 대기·완주 개선",
+      "milestone": 3,
+      "url": "https://github.com/castle923/model-simulator/issues/4",
+      "state": "open"
+    },
+    {
+      "number": 5,
+      "title": "[웹 구현] 기체/카메라/팔·개별속도·고급임무·코드 내보내기",
+      "milestone": 4,
+      "url": "https://github.com/castle923/model-simulator/issues/5",
+      "state": "closed"
+    },
+    {
+      "number": 6,
+      "title": "[웹 구현] 합성 카메라·16:9 줌·UI·오류 실험 이력",
+      "milestone": 5,
+      "url": "https://github.com/castle923/model-simulator/issues/6",
+      "state": "closed"
+    },
+    {
+      "number": 7,
+      "title": "실제 PC 웹캠 화질·지연·장치 전환·권한 회수 검증",
+      "milestone": 5,
+      "url": "https://github.com/castle923/model-simulator/issues/7",
+      "state": "open"
+    },
+    {
+      "number": 8,
+      "title": "legacy 협업·메인 지도·실행·댓글·영상 공유 통합 검증",
+      "milestone": 6,
+      "url": "https://github.com/castle923/model-simulator/issues/8",
+      "state": "open"
+    },
+    {
+      "number": 9,
+      "title": "Unity·CARLA·Gazebo 좌표/시간/기체ID·영상 어댑터",
+      "milestone": 6,
+      "url": "https://github.com/castle923/model-simulator/issues/9",
+      "state": "open"
+    },
+    {
+      "number": 10,
+      "title": "GitHub Actions 회귀·타입·빌드 파이프라인 검증",
+      "milestone": 7,
+      "url": "https://github.com/castle923/model-simulator/issues/10",
+      "state": "open"
+    },
+    {
+      "number": 11,
+      "title": "1차 목표 수치·팀 OS·ROS2 환경 합의와 주행 게이트",
+      "milestone": 8,
+      "url": "https://github.com/castle923/model-simulator/issues/11",
+      "state": "open"
+    },
+    {
+      "number": 12,
+      "title": "YOLO/PPE·추적ID·SLAM/센서·30% 충전·순찰 실물 연결",
+      "milestone": 8,
+      "url": "https://github.com/castle923/model-simulator/issues/12",
+      "state": "open"
+    },
+    {
+      "number": 13,
+      "title": "2차 목표 실제 양팔 안전모 픽업·전달 검증",
+      "milestone": 8,
+      "url": "https://github.com/castle923/model-simulator/issues/13",
+      "state": "open"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {initialScene} from '../lib/scene-local.ts';
+import {parseExperiment,applyExperiment,experimentFor} from '../lib/experiment-command.ts';
+import {applyAdvancedMission,missionFor} from '../lib/advanced-mission.ts';
+const s=initialScene(),before=JSON.stringify(s),id=s.robots[0].id;
+for(const text of ['충돌을 허용하지 않고 목표로 이동해줘','충돌을 허용하지 말고 목표로 직진해줘','오류를 무시하지 말고 목표로 이동해줘','R10 충돌을 허용하고 목표로 직진해줘','충돌 없이 이동'])assert.throws(()=>parseExperiment(s,text,id));
+const p=parseExperiment(s,id+' 충돌을 허용하고 목표로 직진해줘',id),forced=applyExperiment(s,p).scene;assert.equal(forced.robots[0].experiment.mode,'force-direct');assert.equal(forced.robots[0].after,'stay');assert.equal(JSON.stringify(s),before);assert.deepEqual(forced.robots.slice(1),s.robots.slice(1));
+const restored=applyExperiment(forced,experimentFor(forced,id,'normal')).scene;assert.equal(restored.robots[0].experiment,undefined);assert.equal(restored.robots[0].model,s.robots[0].model);
+const advanced=applyAdvancedMission(forced,missionFor(forced,id)).scene;assert.equal(advanced.robots[0].experiment,undefined);assert.equal(advanced.robots[0].model,s.robots[0].model);
+for(const raw of [{...p,baseRevision:-1},{...p,extra:1},{...p,goal:{x:-2,y:0}},{...p,goal:{x:Infinity,y:1}},{...p,robotId:'R10'}])assert.throws(()=>applyExperiment(s,raw));
+console.log('PASS explicit command grammar, negation/id refusal, force/restore, advanced normal reset, strict bounds/schema/revision, original preservation');

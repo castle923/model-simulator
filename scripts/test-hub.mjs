@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+const base=process.env.TEST_BASE||'http://127.0.0.1:5173';
+async function request(member,body,query=''){
+ const response=await fetch(base+'/api/hub'+query,{method:body?'POST':'GET',headers:{...(member?{Authorization:'Bearer '+member.token}:{}),...(body?{'Content-Type':'application/json'}:{})},body:body?JSON.stringify(body):undefined});
+ return {status:response.status,data:await response.json()};
+}
+const a=(await request(null,{action:'join',name:'QA 작성자'})).data;
+const b=(await request(null,{action:'join',name:'QA 작성자'})).data;
+assert.notEqual(a.id,b.id,'Same nickname must not grant same identity');
+assert.equal((await request(null)).status,400);
+let result=await request(a,{action:'post',title:'[자동검증] 작업 보호',body:'원본 내용',tag:'검토 요청',link:''});assert.equal(result.status,200);const post=result.data.id;
+assert.equal((await request(b,{action:'post',id:post,version:1,title:'덮어쓰기',body:'금지',tag:'개발',link:''})).status,400);
+assert.equal((await request(a,{action:'post',id:post,version:1,title:'[자동검증] 작업 보호',body:'수정 내용',tag:'검토 요청',link:''})).status,200);
+assert.equal((await request(a,{action:'post',id:post,version:1,title:'오래된 수정',body:'금지',tag:'개발',link:''})).status,400);
+const detail=(await request(a,null,'?action=detail&id='+post)).data;assert.equal(detail.revisions[0].body,'원본 내용');
+result=await request(a,{action:'start',title:'[자동검증] 실행방',dataset:'test-v1',commit:'local-test',recording:false});assert.equal(result.status,200);const run=result.data.id;
+assert.equal((await request(b,{action:'start',title:'중복 발표',dataset:'test',commit:'test'})).status,400);
+await request(b,{action:'presence',run});
+assert.equal((await request(a,{action:'signal',run,recipient:b.id,payload:{type:'test'}})).status,200);
+assert.equal((await request(b,null,'?action=signals&run='+run+'&after=0')).data.length,1);
+assert.equal((await request(a,null,'?action=signals&run='+run+'&after=0')).data.length,0);
+assert.equal((await request(b,{action:'finish',run,duration:20})).status,400);
+assert.equal((await request(a,{action:'finish',run,duration:20})).status,200);
+assert.equal((await request(b,{action:'comment',target:run,type:'run',seconds:12.4,body:'12.4초 장면 검토'})).status,200);
+assert.equal((await request(b,{action:'comment',target:run,type:'run',seconds:-1,body:'음수 거부'})).status,400);
+assert.equal((await request(b,{action:'comment',target:run,type:'run',seconds:100,body:'범위 초과'})).status,400);
+const d=(await request(a,null,'?action=detail&id='+run)).data;assert.equal(d.comments[0].seconds,12.4);
+const uploadResponse=await fetch(base+'/api/files?target='+post,{method:'POST',headers:{Authorization:'Bearer '+a.token,'Content-Type':'application/octet-stream','X-File-Name':'qa.txt'},body:'source-preserved'});const f=await uploadResponse.json();assert.equal(uploadResponse.status,200,JSON.stringify(f));
+assert.equal(await (await fetch(base+'/api/files?id='+f.id)).text(),'source-preserved');
+const range=await fetch(base+'/api/files?id='+f.id,{headers:{Range:'bytes=0-5'}});assert.equal(range.status,206);assert.equal(await range.text(),'source');
+assert.equal((await fetch(base+'/api/files?target='+post,{method:'POST',headers:{Authorization:'Bearer '+b.token,'Content-Type':'application/octet-stream','X-File-Name':'qa.txt'},body:'overwrite'})).status,400);
+console.log('PASS: anonymous ownership, stale revision rejection, history, exclusive presenter, recipient signaling, timed comments, file bytes, range requests, foreign upload rejection');

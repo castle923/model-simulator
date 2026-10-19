@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {sample,planMission} from '../lib/planner.ts';
+import {singleRobotSnapshot} from '../lib/single-snapshot.ts';
+const world=structuredClone(sample),mission=planMission(world);
+const state={pos:{...world.start},path:mission.outbound,index:1,running:false,phase:'대기',distance:0};
+const initial=singleRobotSnapshot(world,state,.35);
+assert.equal(initial.kind,'single-robot');assert.equal(initial.width,world.width);assert.equal(initial.height,world.height);assert.deepEqual(initial.environment,world);assert.equal(initial.robots.length,1);assert.equal(initial.robots[0].id,1);assert.equal(initial.robots[0].x,world.start.x);
+state.running=true;state.phase='목적지 이동';state.pos={x:1.23,y:2.34};state.distance=.75;state.index=2;
+const moving=singleRobotSnapshot(world,state,.8);assert.equal(moving.robots[0].x,1.23);assert.equal(moving.robots[0].y,2.34);assert.equal(moving.robots[0].phase,'목적지 이동');assert.deepEqual(moving.robots[0].route,mission.outbound);assert.equal(moving.robots[0].index,2);assert(moving.running);assert.equal(moving.speed,.8);assert.equal(moving.distance,.75);
+state.path=mission.inbound;state.index=1;state.phase='충전소 복귀';state.running=false;
+const paused=singleRobotSnapshot(world,state,.1);assert(!paused.running);assert.equal(paused.robots[0].phase,'충전소 복귀');assert.deepEqual(paused.robots[0].route,mission.inbound);
+state.pos={...world.start};state.path=[];state.phase='대기';state.distance=0;
+const reset=singleRobotSnapshot(world,state,.1);assert.equal(reset.robots[0].x,world.start.x);assert.deepEqual(reset.robots[0].route,[]);assert.equal(reset.distance,0);
+world.obstacles[0].x+=.1;assert.notDeepEqual(initial.environment,world,'published snapshots are detached from later environment edits');assert.equal(initial.robots[0].phase,'대기');assert.equal(initial.robots[0].x,sample.start.x);assert.equal(moving.robots[0].x,1.23);
+const source=readFileSync(new URL('../app/Simulator.tsx',import.meta.url),'utf8').replace(/\r\n/g,'\n');assert(source.includes('publishSnapshot();\n const cw='),'draw loop publishes current robot pose each frame');assert(source.includes('setStatus("초기화 완료");publishSnapshot();'));assert(source.includes('publishSnapshot();onCanvas(canvas.current)'));assert(!source.includes('dataset.world=JSON.stringify(world.current)'));assert(!source.includes('dataset.world=JSON.stringify(next)'));
+console.log('PASS: single-robot envelope, live position/phase/route/index, running/speed, outbound and return paths, reset state, detached snapshots and frame/action publication');

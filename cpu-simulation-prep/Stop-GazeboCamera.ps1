@@ -1,0 +1,2 @@
+﻿$ErrorActionPreference = 'Stop'
+& wsl -d Ubuntu-24.04 -u root --exec python3 -c 'from pathlib import Path; import os,signal; base=Path("/root/mechanic-camera"); markers={"gazebo.pid":b"/root/mechanic-camera/world.sdf", "bridge.pid":b"/root/mechanic-camera/bridge.py"}; [(os.kill(int((base/name).read_text()),signal.SIGTERM),print(name,"stopped")) for name,marker in markers.items() if (base/name).exists() and Path("/proc/"+(base/name).read_text().strip()+"/cmdline").exists() and marker in Path("/proc/"+(base/name).read_text().strip()+"/cmdline").read_bytes()]'

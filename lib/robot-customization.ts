@@ -1,0 +1,30 @@
+export type RobotKind='raspbot'|'amr'|'forklift'|'tracked'|'custom'|'turtlebot-burger'|'turtlebot-waffle'|'round-amr';
+export type CameraMount={id:string;label:string;x:number;y:number;z:number;yawDeg:number;pitchDeg:number;fovDeg:number;range:number;width:number;height:number;enabled:boolean};
+export type ManipulatorConfig={id:string;label:string;side:'left'|'right'|'center';reach:number;payloadKg:number;stowed:boolean;joints:{name:string;minDeg:number;maxDeg:number;angleDeg:number}[];enabled:boolean};
+export type RobotCustomization={schema:1;kind:RobotKind;bodyShape?:'rectangle'|'ellipse';label:string;length:number;width:number;height:number;maxSpeed:number;cameras:CameraMount[];manipulators:ManipulatorConfig[]};
+type CustomRobot={customization?:RobotCustomization};
+const text=(v:unknown,max=40):v is string=>typeof v==='string'&&v.length>0&&v.length<=max&&!/[\u0000-\u001f\u007f-\u009f]/.test(v);
+const keys=(o:object,allowed:string[])=>{if(Object.keys(o).some(k=>!allowed.includes(k)))throw Error('기체 구성에 알 수 없는 항목이 있습니다.');};
+const finite=(v:unknown,min:number,max:number):v is number=>typeof v==='number'&&Number.isFinite(v)&&v>=min&&v<=max;
+/** Strict bounded JSON configuration. No scripts, model URLs or hardware drivers. */
+export function validateCustomization(raw:unknown):RobotCustomization{
+ if(!raw||typeof raw!=='object'||JSON.stringify(raw).length>32000)throw Error('기체 구성 JSON은 32KB 이하 객체여야 합니다.');
+ const c=raw as RobotCustomization;keys(c,['schema','kind','bodyShape','label','length','width','height','maxSpeed','cameras','manipulators']);
+ if(c.schema!==1||!['raspbot','amr','forklift','tracked','custom','turtlebot-burger','turtlebot-waffle','round-amr'].includes(c.kind)||(c.bodyShape!==undefined&&!['rectangle','ellipse'].includes(c.bodyShape))||!text(c.label)||!finite(c.length,.1,2)||!finite(c.width,.1,1.5)||!finite(c.height,.05,2.5)||!finite(c.maxSpeed,.02,2)||!Array.isArray(c.cameras)||c.cameras.length>4||!Array.isArray(c.manipulators)||c.manipulators.length>2)throw Error('기체 종류·치수·속도·카메라/팔 개수를 확인하세요.');
+ const ids=new Set<string>();const id=(v:unknown)=>{if(!text(v,64)||!/^[-\w]+$/.test(v)||ids.has(v))throw Error('부품 ID는 영문·숫자·_·- 1~64자이며 중복되지 않아야 합니다.');ids.add(v);};
+ for(const cam of c.cameras){if(!cam||typeof cam!=='object')throw Error('카메라 설정 오류');keys(cam,['id','label','x','y','z','yawDeg','pitchDeg','fovDeg','range','width','height','enabled']);id(cam.id);if(!text(cam.label)||!finite(cam.x,-1.5,1.5)||!finite(cam.y,-1.5,1.5)||!finite(cam.z,.02,3)||!finite(cam.yawDeg,-180,180)||!finite(cam.pitchDeg,-80,80)||!finite(cam.fovDeg,20,150)||!finite(cam.range,.2,30)||!Number.isInteger(cam.width)||!finite(cam.width,160,1920)||!Number.isInteger(cam.height)||!finite(cam.height,120,1080)||typeof cam.enabled!=='boolean')throw Error('카메라 위치·각도·화각·거리·해상도 설정 오류');}
+ for(const arm of c.manipulators){if(!arm||typeof arm!=='object')throw Error('매니퓰레이터 설정 오류');keys(arm,['id','label','side','reach','payloadKg','stowed','joints','enabled']);id(arm.id);if(!text(arm.label)||!['left','right','center'].includes(arm.side)||!finite(arm.reach,.05,1.5)||!finite(arm.payloadKg,0,20)||typeof arm.enabled!=='boolean'||typeof arm.stowed!=='boolean'||!Array.isArray(arm.joints)||arm.joints.length>6)throw Error('매니퓰레이터 도달거리·하중·관절 설정 오류');const names=new Set<string>();for(const j of arm.joints){if(j&&typeof j==='object')keys(j,['name','minDeg','maxDeg','angleDeg']);if(!j||!text(j.name)||names.has(j.name)||!finite(j.minDeg,-180,180)||!finite(j.maxDeg,-180,180)||j.minDeg>j.maxDeg||!finite(j.angleDeg,j.minDeg,j.maxDeg))throw Error('관절 이름·각도 범위를 확인하세요.');names.add(j.name);}}
+ return structuredClone(c);
+}
+export function defaultCustomization(kind:RobotKind='raspbot'):RobotCustomization{
+ const dims:Record<RobotKind,[number,number,number,number]>={raspbot:[.20874,.16583,.12705,.16],amr:[.6,.45,.3,.5],forklift:[.9,.55,.8,.35],tracked:[.4,.3,.25,.25],custom:[.35,.25,.25,.3],'turtlebot-burger':[.138,.178,.192,.22],'turtlebot-waffle':[.281,.306,.141,.26],'round-amr':[.45,.45,.3,.3]};
+ const [length,width,height,maxSpeed]=dims[kind];return {schema:1,kind,bodyShape:kind==='turtlebot-burger'||kind==='round-amr'?'ellipse':'rectangle',label:{raspbot:'라즈봇 V2',amr:'AMR',forklift:'지게차형',tracked:'무한궤도형',custom:'사용자 기체','turtlebot-burger':'TurtleBot3 Burger','turtlebot-waffle':'TurtleBot3 Waffle Pi','round-amr':'원형 AMR (가상)'}[kind],length,width,height,maxSpeed,cameras:kind==='turtlebot-burger'?[]:[{id:'front',label:'정면 카메라',x:length*.35,y:0,z:height,yawDeg:0,pitchDeg:0,fovDeg:70,range:3.6,width:640,height:480,enabled:true}],manipulators:[]};
+}
+export const robotCustomization=(r:CustomRobot)=>r.customization;
+// Bounds the shared renderer's body-scaled camera housing and lens for any yaw.
+export function cameraFootprintPadding(c:RobotCustomization){return Math.hypot(c.length*.05,c.width*.08)+Math.min(c.length,c.width)*.05;}
+export function cameraExtent(c:RobotCustomization){return Math.max(0,...c.cameras.filter(cam=>cam.enabled).map(cam=>Math.hypot(cam.x,cam.y)+cameraFootprintPadding(c)));}
+/** Conservative circular planning envelope around body, cameras and deployed arms. */
+export function robotRadius(r:CustomRobot){const c=r.customization;if(!c)return .22;const bodyAndArms=Math.hypot(c.length,c.width)/2+Math.max(0,...c.manipulators.filter(a=>a.enabled&&!a.stowed).map(a=>a.reach));return Math.max(bodyAndArms,cameraExtent(c))+.01;}
+export function robotSpeed(r:CustomRobot,fallback:number){return r.customization?.maxSpeed??fallback;}
+export function cameraPose(r:CustomRobot,pose:{x:number;y:number;yaw:number;floor:number},cameraId?:string){const c=r.customization;if(!c)return {...pose,z:.4,pitch:0,fov:Math.PI/2.7,range:18,width:640,height:480,enabled:true};const cam=c.cameras.find(cam=>cam.enabled&&(!cameraId||cam.id===cameraId));if(!cam)return null;return {x:pose.x+cam.x*Math.cos(pose.yaw)-cam.y*Math.sin(pose.yaw),y:pose.y+cam.x*Math.sin(pose.yaw)+cam.y*Math.cos(pose.yaw),yaw:pose.yaw+cam.yawDeg*Math.PI/180,floor:pose.floor,z:cam.z,pitch:cam.pitchDeg*Math.PI/180,fov:cam.fovDeg*Math.PI/180,range:cam.range,width:cam.width,height:cam.height,enabled:true};}

@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {factorySample} from '../lib/factory.ts';import {cameraRobotAfterRosterChange,gazeboWorld} from '../lib/gazebo.ts';
+const plain=gazeboWorld(factorySample,[{id:1,x:1,y:1}]);assert(!plain.includes('type="camera"'));assert(plain.includes('raspbot_proxy_0'));const cam=gazeboWorld(factorySample,[],true);assert(cam.includes('<width>640</width><height>480</height>'));assert(cam.includes('<update_rate>10</update_rate>'));assert(cam.includes('gz-sim-sensors-system'));assert(!cam.includes('file://'));assert.throws(()=>gazeboWorld(factorySample,[{id:1,x:NaN,y:1}]));console.log('PASS: SDF geometry, camera opt-in, plugin/resolution/rate, invalid robot rejection; engine runtime NOT tested');
+const front=gazeboWorld(factorySample,[{id:1,x:1,y:1,side:1},{id:2,x:7,y:1,side:-1}],true,2,'/mechanic/camera/00000000-0000-4000-8000-000000000001');
+assert(!front.includes('<model name="overhead_camera">'));assert(front.includes('<model name="charging_station">'));assert.match(front,/<model name="raspbot_proxy_1">[\s\S]*<pose>7 1 0.06 0 0 3.141592653589793<\/pose>[\s\S]*<sensor name="camera" type="camera"><pose>0.14 0 0.14/);
+assert(front.includes('<topic>/mechanic/camera/00000000-0000-4000-8000-000000000001</topic>'));
+assert.throws(()=>gazeboWorld(factorySample,[{id:1,x:1,y:1}],true,2));assert.throws(()=>gazeboWorld(factorySample,[{id:1,x:1,y:1}],true,1,'/other/topic'));
+console.log('PASS: front robot camera, charger geometry, heading/topic validation');
+const sparse=gazeboWorld(factorySample,[{id:2,x:7,y:1,side:-1},{id:4,x:6,y:2,yaw:1}],true,4);
+assert(sparse.includes('raspbot_proxy_1'));assert(sparse.includes('raspbot_proxy_3'));assert(!sparse.includes('raspbot_proxy_0'));assert.match(sparse,/<model name="raspbot_proxy_3">[\s\S]*<pose>6 2 0.06 0 0 1<\/pose>/);
+assert.throws(()=>gazeboWorld(factorySample,[{id:1,x:1,y:1,yaw:Infinity}],true,1));
+console.log('PASS: sparse roster keeps stable model IDs and explicit camera heading');
+assert.equal(cameraRobotAfterRosterChange(3,[{id:1},{id:2},{id:4}]),1);
+assert.equal(cameraRobotAfterRosterChange(0,[{id:1},{id:2},{id:4}]),0);
+assert.equal(cameraRobotAfterRosterChange(4,[{id:1},{id:2},{id:4}]),4);
+assert.equal(cameraRobotAfterRosterChange(3,[]),0);
+console.log('PASS: deleted active camera falls back to first remaining robot; overhead view remains overhead');

@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+import ts from 'typescript';
+import {initialScene,visible} from '../lib/scene-local.ts';
+import {seed,runtimeEntities} from '../lib/scene-runtime.ts';
+// Execute the actual pointer handlers with only the browser coordinate/capture API mocked.
+const source=fs.readFileSync(new URL('../app/SceneLab.tsx',import.meta.url),'utf8');
+const begin=source.indexOf(' function point('),end=source.indexOf(' useEffect(',begin);
+assert.ok(begin>=0&&end>begin);
+const code=ts.transpileModule(source.slice(begin,end),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None}}).outputText;
+const scene=initialScene();scene.robots[0].goalFloor=2;
+const drag={current:null},draft={current:null},poses={current:seed(scene)};
+let committed=null;
+const context=vm.createContext({scene,floor:2,selected:'R1',running:false,drag,draft,poses,runtimeEntities,visible,structuredClone,Math,Number,setStatus(){},setSelected(){},setCameraId(){},commit(s){committed=s;}});
+vm.runInContext(code,context);
+const target={getBoundingClientRect:()=>({left:0,top:0,width:1000,height:600}),setPointerCapture(){},hasPointerCapture:()=>true,releasePointerCapture(){}};
+const event=(x,y)=>({clientX:x*100,clientY:y*100,pointerId:1,currentTarget:target});
+context.event=event(8,3);vm.runInContext('down(event)',context);assert.equal(drag.current?.part,'goal');
+context.event=event(7,2);vm.runInContext('move(event);up(event)',context);assert.deepEqual(structuredClone(committed.robots[0].goal),{x:7,y:2});assert.equal(committed.robots[0].goalFloor,2);assert.equal(scene.robots[0].goal.x,8,'source scene untouched');
+context.floor=1;context.event=event(8,3);vm.runInContext('down(event)',context);assert.equal(drag.current,null,'hidden goal must not be hit on starting floor');
+context.floor=2;Object.assign(poses.current.R1,{x:2,y:2,yaw:.5,floor:2});context.event=event(2+.48*Math.cos(.5),2+.48*Math.sin(.5));vm.runInContext('down(event)',context);assert.equal(drag.current?.part,'yaw');assert.equal(draft.current.robots[0].floor,2);assert.equal(draft.current.robots[0].x,2);
+console.log('PASS actual pointer handlers: destination floor goal drag; hidden floor exclusion; paused pose floor retained');

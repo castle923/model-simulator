@@ -1,0 +1,36 @@
+{
+  "site": "https://model-simulator.chummy-fly-1695.chatgpt.site/",
+  "version": 3,
+  "commit": "ed53be47717ce0154200846f736690bc6be8f2a0",
+  "deployment": "appgdep_6ad1ef23182481918faf9e25b943888a",
+  "deployment_status": "succeeded",
+  "astra_review": "APPROVE source/runtime/mock UI",
+  "astra_manifest": "outputs/agent20-custom/verification.json",
+  "browser_QA": [
+    "1920x1080 16:9 canvas1200x675",
+    "zoom/focus preserve scene revision",
+    "light/large/leftpanel no horizontal overflow",
+    "R2 force direct start/finish/normal restore",
+    "camera R2 mount and simTime match",
+    "public retains saved maprevision11",
+    "public console errors none"
+  ],
+  "limitations": [
+    "Physical USB acquisition not performed; lifecycle mocked",
+    "Pi5 and Unity/CARLA/Gazebo engines not connected",
+    "8-robot 22x12 congested charging case 6complete2safehold after600virtualseconds",
+    "force contacts are conservative envelope violations, not physical collisions",
+    "feedback history stores user iterations; not automatic ML/product-code revision"
+  ],
+  "review_manifest_keys": [
+    "checkedAt",
+    "ok",
+    "changedDuringVerification",
+    "results",
+    "sha256",
+    "finalTargetedReview",
+    "approval",
+    "limitations",
+    "finalDocumentationReview"
+  ]
+}

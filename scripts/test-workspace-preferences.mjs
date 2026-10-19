@@ -1,0 +1,3 @@
+import assert from 'node:assert/strict';
+import {workspaceDefaults,validateWorkspacePreferences} from '../lib/workspace-preferences.ts';
+const d=workspaceDefaults();assert.deepEqual(validateWorkspacePreferences(JSON.parse(JSON.stringify(d))),d);assert.notEqual(validateWorkspacePreferences(d),d);assert.equal(validateWorkspacePreferences({...d,theme:'light',inspectorWidth:640,mapAspect:'square'}).theme,'light');for(const p of [{...d,theme:'auto'},{...d,inspectorWidth:NaN},{...d,inspectorWidth:900},{...d,showGrid:'false'},{...d,extra:1}])assert.throws(()=>validateWorkspacePreferences(p));console.log('PASS bounded local workspace preferences, detached roundtrip, invalid and unknown setting rejection');

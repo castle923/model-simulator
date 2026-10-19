@@ -1,0 +1,5 @@
+import assert from 'node:assert/strict';
+import {createFleet,tickFleet} from '../lib/fleet.ts';
+for(const count of [2,4]){const f=createFleet(count);f.paused=false;for(let i=0;i<60000&&!f.paused;i++){tickFleet(f,.01);assert(f.robots.filter(r=>r.phase==='crossing').length<=1);for(let a=0;a<count;a++)for(let b=a+1;b<count;b++)assert(Math.hypot(f.robots[a].x-f.robots[b].x,f.robots[a].y-f.robots[b].y)>=.4-1e-7);}assert(f.robots.every(r=>r.phase==='done'));assert.equal(f.owner,null);assert.equal(f.events.filter(e=>e.includes('LOCK 획득')).length,count);}
+for(const winner of [1,2]){const f=createFleet();f.robots[winner-1].x+=f.robots[winner-1].side*.01;f.paused=false;while(f.owner===null&&f.time<10)tickFleet(f,.01);assert.equal(f.owner,winner);const owner=f.owner;f.paused=true;for(let i=0;i<100;i++)tickFleet(f,.01);assert.equal(f.owner,owner);}
+const tied=createFleet();tied.paused=false;while(tied.owner===null)tickFleet(tied,.01);assert.equal(tied.owner,1);console.log('PASS: 2/4 vehicles complete, exclusive lock, .4m separation, 1cm lead both sides, deterministic tie, pause retains lock');

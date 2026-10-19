@@ -1,0 +1,42 @@
+name: Web simulator validation
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: web-ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install locked dependencies
+        run: npm ci --include=dev --include=optional --no-audit --no-fund
+      - name: Build browser planning worker
+        run: node scripts/build-scene-worker.mjs
+      - name: Run 30 regression scripts and TypeScript
+        run: node research/agent20-custom/verify-final.mjs
+      - name: Build web application (no deployment)
+        run: node scripts/run-framework.mjs build
+      - name: Preserve verification and build evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-verification-${{ github.sha }}
+          path: |
+            outputs/agent20-custom/
+            dist/
+          retention-days: 7
+          if-no-files-found: warn

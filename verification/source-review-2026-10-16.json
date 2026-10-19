@@ -1,0 +1,208 @@
+{
+  "checkedAt": "2026-10-16T09:28:26.312Z",
+  "ok": true,
+  "changedDuringVerification": [],
+  "results": [
+    {
+      "command": "node --experimental-strip-types scripts/test-robot-customization.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types scripts/test-industrial-customization.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types scripts/test-scene-local.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types scripts/test-dynamic-navigation.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types scripts/test-industrial-runtime.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types scripts/test-industrial-protocol.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types scripts/test-front-projection.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types scripts/test-code-export-safety.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types scripts/test-astra-scene-invariants.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types research/agent20-custom/adversarial.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types research/agent20-custom/mixed-fleet.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types scripts/test-camera-binding.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types research/agent20-custom/camera-lifecycle.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types research/agent20-custom/freedom.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types research/agent20-custom/advanced-mission.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types research/agent20-custom/camera-panel.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types scripts/test-robot-spawn.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types scripts/test-advanced-mission.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types research/agent20-custom/worker-provenance.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types research/agent20-custom/planner-boundaries.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types scripts/test-planner.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types scripts/test-workspace-preferences.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types research/agent20-custom/workspace-integration.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types scripts/test-error-experiment.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types research/agent20-custom/force-boundaries.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types scripts/test-map-viewport.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types research/agent20-custom/experiment-command.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node node_modules/typescript/bin/tsc --noEmit --incremental false",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types research/agent20-custom/operator-panel.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types research/agent20-custom/code-panel.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node --experimental-strip-types scripts/test-experiment-command.mjs",
+      "exitCode": 0
+    }
+  ],
+  "sha256": {
+    "lib/robot-customization.ts": "14d306af3a92b93cc64c0fc2a561d7cea8a7389a581fac21c3bd064fbb6c61d9",
+    "lib/scene-local.ts": "30e0620e3e6b3ab115f8ebd043a7867498bd709ad03345483e0d4e89fa394bcc",
+    "lib/scene-runtime.ts": "3e43affba56935d70c772f75020d5b3c4999238716f66b1853a1925455c1604e",
+    "lib/scene-navigation.ts": "e53c7e1002411a01cf22abfe5ff4dbadb5bd42f92c0784ca836436912c2b134f",
+    "lib/scene-locks.ts": "c70924469a82e52f0ef93af75abfa58fb850459eff5ca5d2c8beb105a5a517b1",
+    "lib/scene-sensor.ts": "52016a2b7f37c107ba4ddee9654b6ee0d70d9fa71363f645f20a2db409d1b4bd",
+    "lib/front-projection.ts": "35cb72fb6f251ef81ad4134070f3068c884e6382fa928892e71b773533ca9411",
+    "lib/industrial-runtime.ts": "6764f6e01c93a2c1620156567ad7e1bf871f9ca4a9a14e072ee97d696060cc50",
+    "lib/industrial-model.ts": "9eb417c6115b2d5db38dad6866ffc2ff4b6de5ee0f44966274d4354eb75f3883",
+    "lib/industrial-geometry.ts": "c5e041758810fab9d2fa42ece1b1b0d702ae4687f1fe3c73b9abfcfdbe0bb756",
+    "lib/industrial-layout.ts": "855ad843cd85336a7794aa2f538e928c13277d2a67dc0f2d76e00b1af6dd9579",
+    "lib/industrial-planner.ts": "189d95d2b2d037c0ddef0c73b49191673076ddfd20caa5c4c0526f03cc2dd4d2",
+    "lib/industrial-protocol.ts": "28baa747c327a58a0aa1790b3c9bc8120e84284c1e4a0c6229ab807c29caae0f",
+    "app/SceneLab.tsx": "fd35ab028d934ab3928607c41d42b3b98285f5cf322be3f9d41a6bb2cfccdaf8",
+    "app/RobotCustomizationWorkspace.tsx": "a09648e7a492ab712177d897210c08feb86af404c00da853313f691d925493a9",
+    "app/robot-custom-drawing.ts": "12d4eafccb89b26ccdb683c3edc15b76e2b0c2d2e9da65ed7fbb716c6cfc7231",
+    "app/robot-customization.css": "3b66bccd1eb955b6842df3ecc5be109d83ab0a9c299ec53954dfaf6f8eb2a664",
+    "app/IndustrialFactoryLab.tsx": "b20b4b9408556a51f754d3b1b46d85bc1084dc535eddb2d550402a6dc73b036d",
+    "app/industrial-factory.css": "81991670c7610384368f607cb6ab60a201920eaa4182771442a42d295881a5d8",
+    "app/scene-local.css": "c87d369ea86f1a0c81a8acfea00b1f295ceee481bdde240cb6f26eca0ac10b52",
+    "scripts/test-robot-customization.mjs": "cd6062f97f5f2bc5eabf780ecea1e7e7e252fb0b2bf4f59aaff18d1994db8f9c",
+    "scripts/test-industrial-customization.mjs": "bc962901c5f86745f89193474a787c6a3a03a9bf51739a36c6f50e70578ab58b",
+    "public/scene-worker.js": "b3fc5a3101187326615a35a905601061dad43f643b319f5e202c90ec6ebac9db",
+    "lib/camera-binding.ts": "a1e3973c791ea0aefc59c6cee151f407d82c07a70c75e26478d25a5e960c777f",
+    "app/CameraSourcePanel.tsx": "e2df9bac2b4b43e03219feb15b8441c28274c00b673509bbe04641dfe916fe12",
+    "scripts/test-camera-binding.mjs": "1e4ce70d398700ae91688ba33fdeb24296d3d0e1c19949845df33e9b42fa4dda",
+    "lib/robot-code-export.ts": "d315986b9a9301bafb99f76f2122fc483610e43732bb7454a56d1419511fc8b0",
+    "lib/vibe-mission.ts": "a02a871fe5540ea49ea92c35930ba77e42943fe7904afd0f718a1df9f4a1f9f0",
+    "lib/advanced-mission.ts": "cd1e522fa585cb8d433a74c9e8babb614e8f11f76d7a7737693d5a210c01a4eb",
+    "app/AdvancedMissionWorkspace.tsx": "dea844144b67480d9391e2a690c9517382c4daf14c0b11af073b7da83b27dbe8",
+    "app/VibeMissionWorkspace.tsx": "c0b6063cde91da71a0cff58cb8bd48947030a5e4588f1d39d4a1527f5d6c7d5d",
+    "app/RobotCodeWorkspace.tsx": "3514c394b7165514a3cd5db8aa9e620231381cb3ac8f69c5729a69bcf6cc34c3",
+    "scripts/build-scene-worker.mjs": "3e66ae0bc8dc46c6449ae6c165240164630a26d66c34ff5fd94e8bf4c492b7be",
+    "app/scene.worker.ts": "9f22c58717741ac45a2cd870d9e1c3a8c8d2ad25a7491cf9a8c2fa864c2fbcee",
+    "lib/planner.ts": "08bfbf53ff70a7663d2ed2267f7a31c4c2c2ba77b97ca3828a3a4e2c4baba51e",
+    "lib/workspace-preferences.ts": "9f48b748bf051b1536e4f3793c1da5cb7e3d9a15050eb240fbefa8ea35c604e3",
+    "app/WorkspacePreferences.tsx": "3de788a1b70a9efcbbe6c02282ed74d0bade4833d20aa0d41bbbd121d63b19ab",
+    "scripts/test-workspace-preferences.mjs": "158392d0b6af2598345507e2a784881397490d68e2fc71bc1a735960d202013a",
+    "scripts/test-error-experiment.mjs": "c0a11ec64e5bf1c22f1a06d52d257575c287c70668cf6ef6a46aada1cfba5684",
+    "lib/map-viewport.ts": "68edbe153d144aa91d7c1b51a48d05aac927ed81ef485784fae38bbcdcfa27a2",
+    "scripts/test-map-viewport.mjs": "1a1fca10abcda8fba0eb1d7954b8393ea5f7a4c70959daab8262583804cbd9c5",
+    "lib/experiment-command.ts": "6a05561b8e448b6e70575d43b7153fadd879d842a7f67fb4bd8ad555bc30b0fe",
+    "app/OperatorExperimentWorkspace.tsx": "56136bfa7c71d14912cff26865ed3a751ecf7e5b2492a3e827d6a3e945ac67d5",
+    "scripts/test-experiment-command.mjs": "cfea100e204409cd9bd4efbc364211a77f7cfcb9d26348eebd26cba857f5d96e",
+    "docs/ROBOT_STUDIO.md": "fc88708bfecc03de426a194c7f8a888acc2ddd1a1aca14782b6b8196e8ae2fcf"
+  },
+  "finalTargetedReview": {
+    "baselineCheckedAt": "2026-10-16T09:25:29.571Z",
+    "changedSinceBaseline": [
+      "app/OperatorExperimentWorkspace.tsx",
+      "app/SceneLab.tsx",
+      "app/scene-local.css"
+    ],
+    "reason": "normal restoration history correction and display-only map focus addition",
+    "targetedCommands": [
+      "node --experimental-strip-types research/agent20-custom/workspace-integration.mjs",
+      "node --experimental-strip-types research/agent20-custom/operator-panel.mjs",
+      "node --experimental-strip-types research/agent20-custom/code-panel.mjs",
+      "node --experimental-strip-types scripts/test-experiment-command.mjs",
+      "node --experimental-strip-types research/agent20-custom/worker-provenance.mjs",
+      "node node_modules/typescript/bin/tsc --noEmit --incremental false"
+    ],
+    "unchangedSourcesRetainFullRegressionEvidence": true
+  },
+  "approval": "APPROVE_TESTED_SOURCE_RUNTIME_MOCK_UI_ONLY",
+  "limitations": [
+    "Browser visual QA and public deployment require separate evidence",
+    "Real USB camera, Pi, ROS, external engines and physical robot behavior not verified",
+    "Eight mixed robots in reported22x12 charging scenario:6 complete,2 safe-hold at600s; arbitrary layouts not guaranteed",
+    "Force-direct intentionally permits simulated envelope contact; capped32 unique contacts, not physics or safety success"
+  ],
+  "finalDocumentationReview": {
+    "checkedAt": "2026-10-16T09:30:09.466Z",
+    "document": "docs/ROBOT_STUDIO.md",
+    "sceneLabelScaleCorrectionAlreadyIncludedInTestedHash": true
+  }
+}
